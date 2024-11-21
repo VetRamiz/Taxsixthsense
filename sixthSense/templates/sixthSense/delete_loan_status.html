@@ -1,0 +1,14 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Delete Loan Status{% endblock %}
+
+{% block content %}
+<h1>Delete Loan Status</h1>
+<p>Are you sure you want to delete the loan status for {{ loan_status.company_name }}?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a href="{% url 'loan_status_report' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

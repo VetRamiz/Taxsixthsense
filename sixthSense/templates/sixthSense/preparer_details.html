@@ -1,0 +1,89 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Preparer Details{% endblock %}
+
+{% block content %}
+<h1>Preparer Details</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>First Name</th>
+        <td>{{ preparer.first_name }}</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td>{{ preparer.last_name }}</td>
+    </tr>
+    <tr>
+        <th>Office Name</th>
+        <td>{{ preparer.office_name }}</td>
+    </tr>
+    <tr>
+        <th>Office Contact</th>
+        <td>{{ preparer.office_contact }}</td>
+    </tr>
+    <tr>
+        <th>Self Employed</th>
+        <td>{{ preparer.get_self_employed_display }}</td>
+    </tr>
+    <tr>
+        <th>View Own Returns</th>
+        <td>{{ preparer.get_view_own_returns_display }}</td>
+    </tr>
+    <tr>
+        <th>Guide Required</th>
+        <td>{{ preparer.get_guide_required_display }}</td>
+    </tr>
+    <tr>
+        <th>Prepares NY Returns</th>
+        <td>{{ preparer.get_prepares_ny_display }}</td>
+    </tr>
+    <tr>
+        <th>Prepares OR Returns</th>
+        <td>{{ preparer.get_prepares_or_returns_display }}</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>{{ preparer.title }}</td>
+    </tr>
+    <tr>
+        <th>Company Name</th>
+        <td>{{ preparer.company_name }}</td>
+    </tr>
+    <tr>
+        <th>Office Code</th>
+        <td>{{ preparer.office_code }}</td>
+    </tr>
+    <tr>
+        <th>Agreement Date</th>
+        <td>{{ preparer.agree_date }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ preparer.email }}</td>
+    </tr>
+    <tr>
+        <th>Phone</th>
+        <td>{{ preparer.phone }}</td>
+    </tr>
+    <tr>
+        <th>Account Active</th>
+        <td>{{ preparer.get_account_active_display }}</td>
+    </tr>
+    <tr>
+        <th>Registered On</th>
+        <td>{{ preparer.registered_on }}</td>
+    </tr>
+    <tr>
+        <th>Updated On</th>
+        <td>{{ preparer.updated_on }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'edit_preparer' preparer.pk %}" class="btn btn-warning">Edit</a>
+<form action="{% url 'delete_preparer' preparer.pk %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<a href="{% url 'preparer_report' %}" class="btn btn-secondary">Back to Preparer Report</a>
+{% endblock %}

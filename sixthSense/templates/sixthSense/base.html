@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: black; /* Black background */
+            color: white; /* Global text color */
+        }
+        
+        input, select, textarea {
+            color: white; /* Text color for input fields */
+            background: #333; /* Dark background for input fields */
+            border: 1px solid #444; /* Border color */
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: #aaa; /* Placeholder text color */
+        }
+        
+        .nav-link, .dropdown-item {
+            color: white; /* White text for links */
+        }
+        
+        .nav-link:hover, .dropdown-item:hover {
+            background-color: #444; /* Darker background on hover for links */
+            color: white; /* Keep text white on hover */
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: #444; /* Active link background */
+            color: white; /* Active link text color */
+        }
+        
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+            width: calc(100% - 200px);
+            background: #000; /* Ensure content area is also black */
+            color: white; /* Ensure content text is white */
+        }
+
+        .header {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #444; /* Darker border */
+        }
+        
+        .header img {
+            height: 50px;
+        }
+        
+        .toggle-sidebar {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white; /* White icon color */
+        }
+        
+        #wrapper {
+            display: flex;
+            margin-top: 60px; /* Adjust for the fixed header */
+        }
+        
+        .sidebar {
+            height: calc(100vh - 60px);
+            width: 200px;
+            background-color: #000;
+            color: #fff;
+            position: fixed;
+            border-right: 1px solid #444; /* Darker border */
+        }
+        
+        .sidebar .nav-link {
+            color: #fff; /* White text color for links */
+            padding: 10px 15px;
+        }
+        
+        .sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: #444; /* Darker background on hover */
+        }
+        
+        .sidebar .nav-link.active {
+            color: #ffffff;
+            background-color: #444; /* Darker background for active links */
+        }
+        
+        .dropdown-menu {
+            background-color: #333; /* Dark background for dropdown */
+            border: none; /* Remove border */
+        }
+        
+        .dropdown-item {
+            color: white; /* White text for dropdown items */
+        }
+        
+        .dropdown-item:hover {
+            background-color: #444; /* Darker background on hover for dropdown items */
+            color: white; /* Keep text white on hover */
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Ensure borders are joined */
+        }
+        
+        th, td {
+            border: 1px solid white; /* White borders for table cells */
+            color: white; /* White text for table cells */
+            padding: 8px; /* Padding for cells */
+            text-align: left; /* Align text to the left */
+        }
+
+        th {
+            background-color: #444; /* Dark background for table headers */
+        }
+
+        tr:nth-child(even) {
+            background-color: #333; /* Darker background for even rows */
+        }
+
+        tr:hover {
+            background-color: #555; /* Highlight row on hover */
+        }
+        
+        @media (max-width: 768px) {
+            .toggle-sidebar {
+                display: block;
+            }
+            .sidebar {
+                transform: translateX(-250px);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    {% load static %}
+    <img src="{% static 'assets/img/logo1.png' %}" alt="Logo">
+    <h1> TaxSixthSense</h1>
+    <button class="toggle-sidebar" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-heading text-center py-3">Dashboard</div>
+        <div class="list-group list-group-flush">
+            <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+            <a href="{% url 'company_report' %}" class="nav-link">Company Report</a>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownCompanies" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Companies</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownCompanies">
+                    <a class="dropdown-item" href="{% url 'company_report' %}">List Companies</a>
+                    <a class="dropdown-item" href="{% url 'register_company' %}">Register Company</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownPreparers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Preparers</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownPreparers">
+                    <a class="dropdown-item" href="{% url 'preparer_report' %}">List Preparers</a>
+                    <a class="dropdown-item" href="{% url 'register_preparer' %}">Register Preparer</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownClients" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownClients">
+                    <a class="dropdown-item" href="{% url 'client_list' %}">Clients List</a>
+                    <a class="dropdown-item" href="{% url 'register_client' %}">Register Client</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownFileAudit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client File Audit</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownFileAudit">
+                    <a class="dropdown-item" href="{% url 'create_audit' %}">Form</a>
+                    <a class="dropdown-item" href="{% url 'audit_list' %}">List</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownLoanStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client Loan Status</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownLoanStatus">
+                    <a class="dropdown-item" href="{% url 'create_loan_status' %}">Form</a>
+                    <a class="dropdown-item" href="{% url 'loan_status_report' %}">List</a>
+                </div>
+            </div>
+            <a href="#" class="nav-link">Reports</a>
+            <a href="#" class="nav-link">Settings</a>
+            <a href="#" class="nav-link">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        {% block content %}
+        <!-- Main content goes here -->
+        {% endblock %}
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Use the correct jQuery version -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script> <!-- Correct Popper.js version -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Sidebar toggle
+        $('#sidebarToggle').click(function() {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+</body>
+</html>

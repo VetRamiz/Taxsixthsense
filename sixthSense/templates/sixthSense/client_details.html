@@ -1,0 +1,41 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Client Details{% endblock %}
+
+{% block content %}
+<h1>Client Details</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Full Name</th>
+        <td>{{ client.first_name }} {{ client.last_name }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ client.email }}</td>
+    </tr>
+    <tr>
+        <th>Phone</th>
+        <td>{{ client.phone }}</td>
+    </tr>
+    <tr>
+        <th>Date of Birth</th>
+        <td>{{ client.dob }}</td>
+    </tr>
+    <tr>
+        <th>Entered On</th>
+        <td>{{ client.entered_on }}</td>
+    </tr>
+    <tr>
+        <th>Updated On</th>
+        <td>{{ client.updated_on }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'edit_client' client.id %}" class="btn btn-warning">Edit</a>
+<form action="{% url 'delete_client' client.id %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<a href="{% url 'client_list' %}" class="btn btn-secondary">Back to Client List</a>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'sixthSense/base.html' %}
+{% load custom_filters %}
+
+
+
+{% block title %}Audit Details{% endblock %}
+
+{% block content %}
+<h1>Audit Details</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Company Name</th>
+        <td>{{ audit.company_name }}</td>
+    </tr>
+    <tr>
+        <th>Preparer</th>
+        <td>{{ audit.preparer }}</td>
+    </tr>
+    <tr>
+        <th>Taxpayer Name</th>
+        <td>{{ audit.taxpayer_name }}</td>
+    </tr>
+    <tr>
+        <th>Date</th>
+        <td>{{ audit.date }}</td>
+    </tr>
+    <tr>
+        <th>Year</th>
+        <td>{{ audit.year }}</td>
+    </tr>
+    <tr>
+        <th>Missing Documents</th>
+        <td>{{ audit.missing_documents }}</td>
+    </tr>
+    <tr>
+        <th>Notes</th>
+        <td>{{ audit.notes }}</td>
+    </tr>
+    <tr>
+        <th>Identification Drivers License</th>
+        <td>{{ audit.identification_drivers_license|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Social Security Card</th>
+        <td>{{ audit.social_security_card|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Healthcare 1095 Form</th>
+        <td>{{ audit.healthcare1095_form|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Spouse Name</th>
+        <td>{{ audit.spouse_name }}</td>
+    </tr>
+    <tr>
+        <th>Identification Drivers License 1</th>
+        <td>{{ audit.identification_drivers_license1|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Social Security Card 1</th>
+        <td>{{ audit.social_security_card1|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Healthcare 1095 Form 1</th>
+        <td>{{ audit.healthcare1095_form1|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>A of Dependents</th>
+        <td>{{ audit.a_of_dependents|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Dependent SSC</th>
+        <td>{{ audit.dependent_ssc|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Healthcare Card</th>
+        <td>{{ audit.healthcare_card|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Birth Certificate</th>
+        <td>{{ audit.birth_certificate|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Application with Signature</th>
+        <td>{{ audit.application_w_signature|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Signed Documents</th>
+        <td>{{ audit.signed_documents|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>W2</th>
+        <td>{{ audit.w2|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>Self Employment Log</th>
+        <td>{{ audit.self_employment_log|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>A1099</th>
+        <td>{{ audit.a1099|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>SSA</th>
+        <td>{{ audit.ssa|get_yes_no }}</td>
+    </tr>
+    <tr>
+        <th>A1098T</th>
+        <td>{{ audit.a1098t|get_yes_no }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'edit_audit' audit.pk %}" class="btn btn-warning">Edit</a>
+<form action="{% url 'delete_audit' audit.pk %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<a href="{% url 'audit_list' %}" class="btn btn-secondary">Back to Audit List</a>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'sixthSense/base.html' %}
+{% load custom_filters %}
+
+{% block title %}Audit List{% endblock %}
+
+{% block content %}
+<h1>Audit List</h1>
+<a href="{% url 'create_audit' %}" class="btn btn-primary mb-3">Add New Audit</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Preparer</th>
+            <th>Taxpayer Name</th>
+            <th>Date</th>
+            <th>Year</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for audit in audits %}
+            <tr>
+                <td>{{ audit.company_name }}</td>
+                <td>{{ audit.preparer }}</td>
+                <td>{{ audit.taxpayer_name }}</td>
+                <td>{{ audit.date }}</td>
+                <td>{{ audit.year }}</td>
+                <td>
+                    <a href="{% url 'audit_detail' audit.pk %}" class="btn btn-info btn-sm">Details</a>
+                    <a href="{% url 'edit_audit' audit.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{% url 'delete_audit' audit.pk %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No audits found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

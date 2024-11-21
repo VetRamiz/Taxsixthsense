@@ -1,0 +1,101 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Loan Status Details{% endblock %}
+
+{% block content %}
+<h1>Loan Status Details</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Company Name</th>
+        <td>{{ loan_status.company_name }}</td>
+    </tr>
+    <tr>
+        <th>Preparer</th>
+        <td>{{ loan_status.preparer }}</td>
+    </tr>
+    <tr>
+        <th>Application Date</th>
+        <td>{{ loan_status.application_date }}</td>
+    </tr>
+    <tr>
+        <th>Year</th>
+        <td>{{ loan_status.year }}</td>
+    </tr>
+    <tr>
+        <th>Decision Date</th>
+        <td>{{ loan_status.decision_date }}</td>
+    </tr>
+    <tr>
+        <th>Loan Type</th>
+        <td>{{ loan_status.loan_type }}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ loan_status.status }}</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td>{{ loan_status.last_name }}</td>
+    </tr>
+    <tr>
+        <th>First Name</th>
+        <td>{{ loan_status.first_name }}</td>
+    </tr>
+    <tr>
+        <th>SSN</th>
+        <td>{{ loan_status.ssn }}</td>
+    </tr>
+    <tr>
+        <th>Disbursement Type</th>
+        <td>{{ loan_status.disb_type }}</td>
+    </tr>
+    <tr>
+        <th>Advance Amount</th>
+        <td>{{ loan_status.advance_amount }}</td>
+    </tr>
+    <tr>
+        <th>Outstanding Loan Balance</th>
+        <td>{{ loan_status.outstanding_loan_balance }}</td>
+    </tr>
+    <tr>
+        <th>Marketing Fee</th>
+        <td>{{ loan_status.marketing_fee }}</td>
+    </tr>
+    <tr>
+        <th>Repayment Status</th>
+        <td>{{ loan_status.repayment_status }}</td>
+    </tr>
+    <tr>
+        <th>Group EFIn</th>
+        <td>{{ loan_status.group_efin }}</td>
+    </tr>
+    <tr>
+        <th>Parent EFIn</th>
+        <td>{{ loan_status.parent_efin }}</td>
+    </tr>
+    <tr>
+        <th>Office EFIn</th>
+        <td>{{ loan_status.office_efin }}</td>
+    </tr>
+    <tr>
+        <th>PTIN</th>
+        <td>{{ loan_status.ptin }}</td>
+    </tr>
+    <tr>
+        <th>Loan Disbursement Type</th>
+        <td>{{ loan_status.loan_disb_type }}</td>
+    </tr>
+    <tr>
+        <th>IRS Acknowledgment Date</th>
+        <td>{{ loan_status.irs_ack_date }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'edit_loan_status' loan_status.pk %}" class="btn btn-warning">Edit</a>
+<form action="{% url 'delete_loan_status' loan_status.pk %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<a href="{% url 'loan_status_report' %}" class="btn btn-secondary">Back to Loan Status Report</a>
+{% endblock %}

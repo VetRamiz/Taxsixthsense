@@ -1,0 +1,58 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Client List{% endblock %}
+
+{% block content %}
+<h1>Client List</h1>
+<a href="{% url 'register_client' %}" class="btn btn-primary mb-3">Register New Client</a>
+
+<form method="GET" class="mb-3">
+    <div class="input-group">
+        <select name="last_name" class="form-select">
+            <option value="">Select Last Name</option>
+            {% for client in clients %}
+                <option value="{{ client.last_name }}"{% if client.last_name == search_last_name %} selected{% endif %}>{{ client.last_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>DOB</th>
+            <th>Entered On</th>
+            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+            <tr>
+                <td>{{ client.first_name }} {{ client.last_name }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.dob }}</td>
+                <td>{{ client.entered_on }}</td>
+                
+                <td>
+                    <a href="{% url 'edit_client' client.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{% url 'delete_client' client.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    <a href="{% url 'client_details' client.id %}" class="btn btn-info btn-sm">Details</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No clients found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

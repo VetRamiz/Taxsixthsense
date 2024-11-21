@@ -1,0 +1,56 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Company Report{% endblock %}
+
+{% block content %}
+<h1>Company Report</h1>
+<a href="{% url 'register_company' %}" class="btn btn-primary mb-3">Register New Company</a>
+
+<form method="GET" class="mb-3">
+    <input type="text" name="q" placeholder="Search..." value="{{ query }}">
+    <select name="status">
+        <option value="">All Statuses</option>
+        <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Active</option>
+        <option value="inactive" {% if status_filter == 'inactive' %}selected{% endif %}>Inactive</option>
+    </select>
+    <button type="submit" class="btn btn-secondary">Filter</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for company in companies %}
+            <tr>
+                <td>{{ company.company_name }}</td>
+                <td>{{ company.email_id }}</td>
+                <td>{{ company.phone_number }}</td>
+                <td>{{ company.city }}</td>
+                <td>{{ company.state }}</td>
+                <td>{{ company.zip_code }}</td>
+                <td>
+                    <a href="{% url 'company_details' company.pk %}" class="btn btn-info btn-sm">Details</a>
+                    <a href="{% url 'edit_company' company.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{% url 'delete_company' company.pk %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No companies found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

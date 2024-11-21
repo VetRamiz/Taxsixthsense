@@ -1,0 +1,124 @@
+{% extends 'sixthSense/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}{% if form.instance.pk %}Edit{% else %}Create{% endif %} Loan Status{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Loan Status</h1>
+<form method="POST" enctype="multipart/form-data">  <!-- Include enctype for file upload -->
+    {% csrf_token %}
+    
+    <div class="form-group">
+        {{ form.company_name.label_tag }}
+        {{ form.company_name|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+        {{ form.preparer.label_tag }}
+        {{ form.preparer|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.additional_preparer.label_tag }}
+        {{ form.additional_preparer|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+        {{ form.application_date.label_tag }}
+        {{ form.application_date|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.year.label_tag }}
+        {{ form.year|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.decision_date.label_tag }}
+        {{ form.decision_date|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.loan_type.label_tag }}
+        {{ form.loan_type|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.status.label_tag }}
+        {{ form.status|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.last_name.label_tag }}
+        {{ form.last_name|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.first_name.label_tag }}
+        {{ form.first_name|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.ssn.label_tag }}
+        {{ form.ssn|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.disb_type.label_tag }}
+        {{ form.disb_type|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.advance_amount.label_tag }}
+        {{ form.advance_amount|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.outstanding_loan_balance.label_tag }}
+        {{ form.outstanding_loan_balance|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.marketing_fee.label_tag }}
+        {{ form.marketing_fee|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.repayment_status.label_tag }}
+        {{ form.repayment_status|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.group_efin.label_tag }}
+        {{ form.group_efin|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.parent_efin.label_tag }}
+        {{ form.parent_efin|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.office_efin.label_tag }}
+        {{ form.office_efin|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.ptin.label_tag }}
+        {{ form.ptin|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.loan_disb_type.label_tag }}
+        {{ form.loan_disb_type|add_class:"form-control" }}
+    </div>
+
+    <div class="form-group">
+        {{ form.irs_ack_date.label_tag }}
+        {{ form.irs_ack_date|add_class:"form-control" }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'loan_status_report' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

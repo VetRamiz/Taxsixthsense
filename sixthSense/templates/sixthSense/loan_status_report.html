@@ -1,0 +1,41 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block title %}Loan Status Report{% endblock %}
+
+{% block content %}
+<h1>Loan Status Report</h1>
+<a href="{% url 'create_loan_status' %}" class="btn btn-primary mb-3">Create New Loan Status</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Preparer</th>
+            <th>Application Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for loan_status in loan_statuses %}
+            <tr>
+                <td>{{ loan_status.company_name }}</td>
+                <td>{{ loan_status.preparer }}</td>
+                <td>{{ loan_status.application_date }}</td>
+                <td>{{ loan_status.status }}</td>
+                <td>
+                    <a href="{% url 'edit_loan_status' loan_status.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{% url 'delete_loan_status' loan_status.pk %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No loan statuses found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
