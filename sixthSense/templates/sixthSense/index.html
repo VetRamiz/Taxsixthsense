@@ -1,0 +1,43 @@
+{% extends 'sixthSense/base.html' %}
+
+{% block content %}
+<div style="display: flex; flex-wrap: wrap; height: 100vh; padding: 2rem;">
+    <!-- Left Section: Company Login -->
+    <div style="flex: 1 1 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #f4f4f4; padding: 2rem; margin-bottom: 1rem;">
+        <h2 style="color: black;">Company Login</h2>
+        <form method="POST" action="{% url 'login_company' %}" style="width: 100%; max-width: 400px;">
+            {% csrf_token %}
+            <div style="margin-bottom: 1rem;">
+                <label for="username" style="color: black;">Username:</label>
+                <input type="text" id="username" name="username" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="password" style="color: black;">Password:</label>
+                <input type="password" id="password" name="password" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem;">
+            </div>
+            <button type="submit" style="padding: 0.8rem; background-color: #007bff; color: white; border: none; width: 100%; font-size: 1rem; cursor: pointer;">Login as Company</button>
+        </form>
+    </div>
+
+    <!-- Divider -->
+    <div style="width: 1px; background-color: #ccc; margin: 1rem;"></div>
+
+    <!-- Right Section: Preparer Login -->
+    <div style="flex: 1 1 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #ffffff; padding: 2rem; margin-bottom: 1rem;">
+        <h2 style="color: black;">Preparer Login</h2>
+        <form method="POST" action="{% url 'login_preparer' %}" style="width: 100%; max-width: 400px;">
+            {% csrf_token %}
+            <div style="margin-bottom: 1rem;">
+                <label for="username" style="color: black;">Username:</label>
+                <input type="text" id="username" name="username" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label for="password" style="color: black;">Password:</label>
+                <input type="password" id="password" name="password" required style="width: 100%; padding: 0.8rem; margin-top: 0.5rem;">
+            </div>
+            <button type="submit" style="padding: 0.8rem; background-color: #007bff; color: white; border: none; width: 100%; font-size: 1rem; cursor: pointer;">Login as Preparer</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "sixthSense/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Company Dashboard</h2>
+    <h4>{{ company.company_name }}</h4> <!-- Display company name -->
+
+    <div class="mb-4">
+        <form method="get">
+            <label for="year">Filter by Year:</label>
+            <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+                <option value="">All Years</option>
+                {% for year in years %}
+                    <option value="{{ year }}" {% if year|stringformat:"s" == selected_year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="row">
+        <!-- Audit Data -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Clients</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ audit_data.total_clients }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Total Missing Documents</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ audit_data.total_missing_docs }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Percentage of Missing Docs</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ audit_data.percentage_missing|floatformat:2 }}%</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payout Data -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total Customers</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ payout_data.total_customers }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Total Prep Fee Charged</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payout_data.total_prep_fee }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Total Payout</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payout_data.total_payout }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loan Data -->
+        <div class="col-md-4">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Clients with Loans</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ loan_data.clients_with_loans }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Loan Amount</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ loan_data.total_loan_amount }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total Marketing Fee</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ loan_data.total_marketing_fee }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

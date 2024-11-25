@@ -1,0 +1,77 @@
+{% extends "sixthSense/base_preparer.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Taxpayer Audit Report</h2>
+
+    <!-- Year Filter -->
+    <form method="get" class="mb-4">
+        <label for="year">Filter by Year:</label>
+        <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+            <option value="">All Years</option>
+            {% for year in years %}
+                <option value="{{ year }}" {% if year|stringformat:"s" == selected_year %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Audit List -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Preparer</th>
+                <th>Date</th>
+                <th>Taxpayer Name</th>
+                <th>Spouse Name</th>
+                <th>Missing Documents</th>
+                <th>Notes</th>
+                <th>ID Drivers License</th>
+                <th>SS Card</th>
+                <th>Health Care Form</th>
+                <th>ID Drivers License 1</th>
+                <th>SS Card 1</th>
+                <th>Health Care Form 1</th>
+                <th>Dependents</th>
+                <th>Dependent SSC</th>
+                <th>Health Care Card</th>
+                <th>Birth Certificate</th>
+                <th>Application Signature</th>
+                <th>Signed Docs</th>
+                <th>W2</th>
+                <th>Self Employment Log</th>
+                <th>1099</th>
+                <th>SSA</th>
+                <th>1098T</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for audit in audits %}
+            <tr>
+                <td>{{ audit.preparer }}</td>
+                <td>{{ audit.date }}</td>
+                <td>{{ audit.taxpayer_name }}</td>
+                <td>{{ audit.spouse_name }}</td>
+                <td>{{ audit.total_missing }}</td>
+                <td>{{ audit.notes }}</td>
+                <td>{{ audit.identification_drivers_license|yesno:"✔,✘" }}</td>
+                <td>{{ audit.social_security_card|yesno:"✔,✘" }}</td>
+                <td>{{ audit.healthcare1095_form|yesno:"✔,✘" }}</td>
+                <td>{{ audit.identification_drivers_license1|yesno:"✔,✘" }}</td>
+                <td>{{ audit.social_security_card1|yesno:"✔,✘" }}</td>
+                <td>{{ audit.healthcare1095_form1|yesno:"✔,✘" }}</td>
+                <td>{{ audit.a_of_dependents|yesno:"✔,✘" }}</td>
+                <td>{{ audit.dependent_ssc|yesno:"✔,✘" }}</td>
+                <td>{{ audit.healthcare_card|yesno:"✔,✘" }}</td>
+                <td>{{ audit.birth_certificate|yesno:"✔,✘" }}</td>
+                <td>{{ audit.application_w_signature|yesno:"✔,✘" }}</td>
+                <td>{{ audit.signed_documents|yesno:"✔,✘" }}</td>
+                <td>{{ audit.w2|yesno:"✔,✘" }}</td>
+                <td>{{ audit.self_employment_log|yesno:"✔,✘" }}</td>
+                <td>{{ audit.a1099|yesno:"✔,✘" }}</td>
+                <td>{{ audit.ssa|yesno:"✔,✘" }}</td>
+                <td>{{ audit.a1098t|yesno:"✔,✘" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,61 +1,69 @@
 # sixthSense/models.py
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
 
+
+from django.db import models
+
+# Custom User Model
+
+# Company Model
 class Company(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='company_profile')
     COMPANY_STATUS_CHOICES = [
         ('active', 'Active'),
         ('inactive', 'Inactive'),
     ]
-
     company_name = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to='logos/')
-    email_id = models.EmailField()
-    password = models.CharField(max_length=128)
+    email= models.EmailField(max_length=254)
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True)
     status = models.CharField(max_length=8, choices=COMPANY_STATUS_CHOICES)
-    office_contact = models.CharField(max_length=15)
-    phone_number = models.CharField(max_length=15)
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    zip_code = models.CharField(max_length=10)
-    address = models.TextField()
+    office_contact = models.CharField(max_length=15, blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    state = models.CharField(max_length=100, blank=True)
+    zip_code = models.CharField(max_length=10, blank=True)
+    role= models.CharField(max_length=100, blank=True)
+    address = models.TextField(blank=True)
     registered_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    role = models.CharField(max_length=50)
 
     def __str__(self):
         return self.company_name
 
 
+# Preparer Model
 class Preparer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='preparer_profile')
     ACCOUNT_STATUS_CHOICES = [
         ('active', 'Active'),
         ('inactive', 'Inactive'),
     ]
 
-   
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    data_entry = models.DateTimeField(auto_now_add=True)
-    office_name = models.CharField(max_length=255)
+    preparer_email= models.EmailField()
+    office_name = models.CharField(max_length=255, blank=True)
     office_contact = models.BooleanField(default=False)
     self_employed = models.BooleanField(default=False)
     view_own_returns = models.BooleanField(default=False)
     guide_required = models.BooleanField(default=False)
     prepares_ny = models.BooleanField(default=False)
     prepares_or_returns = models.BooleanField(default=False)
-    title = models.CharField(max_length=100)
-    company_name = models.CharField(max_length=255)
-    office_code = models.CharField(max_length=50)
-    agree_date = models.DateField()
-    email = models.EmailField()
-    password = models.CharField(max_length=128)
-    phone = models.CharField(max_length=15)
+    title = models.CharField(max_length=100, blank=True)
+    company_name = models.CharField(max_length=255, blank=True)
+    office_code = models.CharField(max_length=50, blank=True)
+    agree_date = models.DateField(blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True)
     account_active = models.CharField(max_length=8, choices=ACCOUNT_STATUS_CHOICES)
     registered_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
 
 
 class Client(models.Model):
@@ -186,7 +194,6 @@ class TaxpayerLoanStatus(models.Model):
         return f"Loan Status for {self.first_name} {self.last_name} - {self.application_date}"
 class WebReportTaxesToGo(models.Model):
     company_name = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='web_reports_by_name')
-    
     preparer = models.ForeignKey(Preparer, on_delete=models.CASCADE, related_name='web_reports')
     additional_preparer = models.TextField(blank=True, null=True)
     group_name = models.IntegerField()

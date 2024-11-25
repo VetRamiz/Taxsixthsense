@@ -4,157 +4,43 @@
 {% block title %}Create Audit{% endblock %}
 
 {% block content %}
-<h1>Create Audit Entry</h1>
-<form method="POST">
-    {% csrf_token %}
-    
-    <div class="form-group">
-        {{ form.company_name.label_tag }}
-        {{ form.company_name|add_class:"form-control" }}
-    </div>
-    
-    <div class="form-group">
-        {{ form.preparer.label_tag }}
-        {{ form.preparer|add_class:"form-control" }}
-    </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Create Audit Entry</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                            {% if field.widget.input_type == "checkbox" %}
+                                <div class="form-check mb-3">
+                                    {{ field|add_class:"form-check-input me-2" }}
+                                    <label for="{{ field.id_for_label }}" class="form-check-label">
+                                        {{ field.label }}
+                                    </label>
+                                </div>
+                            {% else %}
+                                <div class="form-group mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                    {{ field|add_class:"form-control" }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
 
-    <div class="form-group">
-        {{ form.additional_preparer.label_tag }}
-        {{ form.additional_preparer|add_class:"form-control" }}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="form-group">
-        {{ form.date.label_tag }}
-        {{ form.date|add_class:"form-control" }}
-    </div>
-
-    <div class="form-group">
-        {{ form.year.label_tag }}
-        {{ form.year|add_class:"form-control" }}
-    </div>
-
-    <div class="form-group">
-        {{ form.missing_documents.label_tag }}
-        {{ form.missing_documents|add_class:"form-control" }}
-    </div>
-
-    <div class="form-group">
-        {{ form.notes.label_tag }}
-        {{ form.notes|add_class:"form-control" }}
-    </div>
-
-    <div class="form-group">
-        {{ form.taxpayer_name.label_tag }}
-        {{ form.taxpayer_name|add_class:"form-control" }}
-    </div>
-
-    <div class="form-group">
-        {{ form.identification_drivers_license.label_tag }}
-        {{ form.identification_drivers_license|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.identification_drivers_license.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.social_security_card.label_tag }}
-        {{ form.social_security_card|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.social_security_card.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.healthcare1095_form.label_tag }}
-        {{ form.healthcare1095_form|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.healthcare1095_form.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.spouse_name.label_tag }}
-        {{ form.spouse_name|add_class:"form-control" }}
-    </div>
-
-    <div class="form-group">
-        {{ form.identification_drivers_license1.label_tag }}
-        {{ form.identification_drivers_license1|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.identification_drivers_license1.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.social_security_card1.label_tag }}
-        {{ form.social_security_card1|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.social_security_card1.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.healthcare1095_form1.label_tag }}
-        {{ form.healthcare1095_form1|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.healthcare1095_form1.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.a_of_dependents.label_tag }}
-        {{ form.a_of_dependents|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.a_of_dependents.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.dependent_ssc.label_tag }}
-        {{ form.dependent_ssc|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.dependent_ssc.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.healthcare_card.label_tag }}
-        {{ form.healthcare_card|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.healthcare_card.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.birth_certificate.label_tag }}
-        {{ form.birth_certificate|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.birth_certificate.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.application_w_signature.label_tag }}
-        {{ form.application_w_signature|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.application_w_signature.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.signed_documents.label_tag }}
-        {{ form.signed_documents|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.signed_documents.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.w2.label_tag }}
-        {{ form.w2|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.w2.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.self_employment_log.label_tag }}
-        {{ form.self_employment_log|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.self_employment_log.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.a1099.label_tag }}
-        {{ form.a1099|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.a1099.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.ssa.label_tag }}
-        {{ form.ssa|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.ssa.label }}</label>
-    </div>
-
-    <div class="form-group">
-        {{ form.a1098t.label_tag }}
-        {{ form.a1098t|add_class:"form-check-input" }}
-        <label class="form-check-label">{{ form.a1098t.label }}</label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+</div>
 {% endblock %}

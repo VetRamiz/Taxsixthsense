@@ -7,19 +7,16 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = [
-            'company_name', 'logo', 'email_id', 'password',
+            'company_name', 'logo',
             'status', 'office_contact', 'phone_number',
-            'city', 'state', 'zip_code', 'address', 'role'
+            'city', 'state', 'zip_code', 'address','role'
         ]
         widgets = {
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
             'logo': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
         labels = {
             'company_name': 'Company Name',
             'logo': 'Company Logo',
-            'email_id': 'Email Address',
-            'password': 'Password',
             'status': 'Company Status',
             'office_contact': 'Office Contact',
             'phone_number': 'Phone Number',
@@ -38,7 +35,7 @@ class PreparerForm(forms.ModelForm):
             'self_employed', 'view_own_returns', 'guide_required', 
             'prepares_ny', 'prepares_or_returns', 'title', 
             'company_name', 'office_code', 'agree_date', 
-            'email', 'password', 'phone', 'account_active'
+             'phone', 'account_active'
         ]
         widgets = {
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
@@ -58,8 +55,6 @@ class PreparerForm(forms.ModelForm):
             'company_name': 'Company Name',
             'office_code': 'Office Code',
             'agree_date': 'Agreement Date',
-            'email': 'Email Address',
-            'password': 'Password',
             'phone': 'Phone Number',
             'account_active': 'Account Active',
         }
@@ -128,22 +123,169 @@ class TaxpayerLoanStatusForm(forms.ModelForm):
 
 from django import forms
 
-class CompanyLoginForm(forms.Form):
-    email = forms.EmailField(label="Company Email", max_length=255)
-    password = forms.CharField(widget=forms.PasswordInput, label="Password")
-
-    def __init__(self, *args, **kwargs):
-        super(CompanyLoginForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password'].widget.attrs.update({'class': 'form-control'})
 from django import forms
 
+class CompanyLoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter password'}))
+
 class PreparerLoginForm(forms.Form):
-    email = forms.EmailField(label="Preparer Email", max_length=255)
-    password = forms.CharField(widget=forms.PasswordInput, label="Password")
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter email'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter password'}))
 
-    def __init__(self, *args, **kwargs):
-        super(PreparerLoginForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password'].widget.attrs.update({'class': 'form-control'})
 
+from django import forms
+from .models import  Company, Preparer
+
+
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        exclude = ['user']
+
+
+class PreparerForm(forms.ModelForm):
+    class Meta:
+        model = Preparer
+        exclude = ['user']
+from django import forms
+from django.contrib.auth.models import User
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            raise forms.ValidationError('Passwords do not match')
+        return cleaned_data
+
+from django import forms
+from django.contrib.auth.models import User
+from .models import Company, Preparer
+
+
+from django import forms
+from django.contrib.auth.models import User, Group
+from .models import Company
+
+from django.core.exceptions import ValidationError
+class CompanyRegistrationForm(forms.ModelForm):
+    # Fields for the User model
+    username = forms.CharField(max_length=150, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    email = forms.EmailField(required=True)
+
+    # Fields for the Company model
+    class Meta:
+        model = Company
+        fields = [
+            'company_name', 'logo', 'status', 'office_contact', 'phone_number','email',
+            'city', 'state', 'zip_code', 'role', 'address',
+        ]
+
+    def save(self, commit=True):
+        # Check if the username already exists
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("Username already exists. Please choose a different username.")
+
+
+    def save(self, commit=True):
+        # Create the User instance
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            password=self.cleaned_data['password'],
+            email=self.cleaned_data['email']
+        )
+
+        # Populate the Company profile
+        company = super().save(commit=False)
+        company.user = user
+        company.email = self.cleaned_data['email']  # Sync email with User
+
+        if commit:
+            company.save()
+
+            # Assign to the Company group after the user is saved
+            company_group, created = Group.objects.get_or_create(name='Company')
+            user.groups.add(company_group)  # Add user to the Company group
+
+        return user  # Return the User instance for further use
+
+
+from django import forms
+from django.contrib.auth.models import User, Group
+from .models import Preparer
+
+
+class PreparerRegistrationForm(forms.ModelForm):
+    # Fields for the User model
+    username = forms.CharField(max_length=150, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    email = forms.EmailField(required=True)
+
+    # Fields for the Preparer model
+    class Meta:
+        model = Preparer
+        fields = [
+            'first_name', 'last_name', 'office_name', 'office_contact', 'self_employed',
+            'view_own_returns', 'guide_required', 'prepares_ny', 'prepares_or_returns',
+            'title', 'company_name', 'office_code', 'agree_date', 'phone', 'account_active',
+        ]
+
+    def save(self, commit=True):
+        # Create the User instance
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            password=self.cleaned_data['password'],
+            email=self.cleaned_data['email']
+        )
+
+        # Populate the Preparer profile
+        preparer = super().save(commit=False)
+        preparer.user = user
+        preparer.preparer_email = self.cleaned_data['email']  # Sync email with User
+
+        if commit:
+            preparer.save()
+
+            # Assign to the Preparer group after the user is saved
+            preparer_group, created = Group.objects.get_or_create(name='Preparer')
+            user.groups.add(preparer_group)  # Add user to the Preparer group
+
+        return user  # Return the User instance for further use
+
+from django import forms
+from .models import Preparer
+
+class PreparerProfileForm(forms.ModelForm):
+    class Meta:
+        model = Preparer
+        fields = [
+            "first_name",
+            "last_name",
+            "preparer_email",
+            "office_name",
+            "office_contact",
+            "self_employed",
+            "view_own_returns",
+            "guide_required",
+            "prepares_ny",
+            "prepares_or_returns",
+            "title",
+            "company_name",
+            "agree_date",
+            "phone",
+        ]
+        widgets = {
+            "agree_date": forms.DateInput(attrs={"type": "date"}),
+        }

@@ -1,0 +1,140 @@
+{% extends "sixthSense/base_preparer.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Partnership Payroll Report</h2>
+
+    <div class="mb-4">
+        <form method="get">
+            <label for="year">Filter by Year:</label>
+            <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+                <option value="">All Years</option>
+                {% for year in years %}
+                    <option value="{{ year }}" {% if year|stringformat:"s" == selected_year %}selected{% endif %}>{{ year }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <div class="row">
+        <!-- Total Prep Fee Charged -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Prep Fee Charged</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.total_prep_fee_charged|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fees Intercepted -->
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Fees Intercepted</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.fees_intercepted|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Prep Fee Deposited -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total Prep Fee Deposited</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.total_prep_fee_deposited|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partnership Remaining Balance -->
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Partnership Remaining Balance</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.partnership_remaining_balance|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advance Loan Fees -->
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Advance Loan Fees</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.advance_loan_fees|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sum Total Preparer -->
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Sum Total Preparer</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.sum_total_preparer|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Split -->
+        <div class="col-md-4">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Split</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.split|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payout -->
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Payout</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.payout|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prior Week Hold -->
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Prior Week Hold</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.prior_week_hold|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Week Hold -->
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Current Week Hold</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.current_week_hold|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Hold -->
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Total Hold</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.total_hold|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Release Hold Amount -->
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Release Hold Amount</div>
+                <div class="card-body">
+                    <h5 class="card-title">${{ payroll_data.release_hold_amt|default:"0.00" }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

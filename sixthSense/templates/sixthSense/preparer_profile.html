@@ -1,0 +1,62 @@
+{% extends "sixthSense/base_preparer.html" %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="card shadow" style="width: 50%;">
+        <div class="card-header text-center bg-primary text-white">
+            <h2>Preparer Profile</h2>
+        </div>
+        <div class="card-body">
+            <div class="text-center mb-4">
+                
+                {% if preparer.title %}
+                <p class="text-muted">{{ preparer.title }}</p>
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Email:</strong> {{ preparer.preparer_email }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Office Name:</strong> {{ preparer.office_name|default:"N/A" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Self-Employed:</strong> {{ preparer.self_employed|yesno:"Yes,No" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Office Contact:</strong> {{ preparer.office_contact|yesno:"Yes,No" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>View Own Returns:</strong> {{ preparer.view_own_returns|yesno:"Yes,No" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Guide Required:</strong> {{ preparer.guide_required|yesno:"Yes,No" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Prepares NY Returns:</strong> {{ preparer.prepares_ny|yesno:"Yes,No" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Prepares OR Returns:</strong> {{ preparer.prepares_or_returns|yesno:"Yes,No" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Company Name:</strong> {{ preparer.company_name|default:"N/A" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Agreement Date:</strong> {{ preparer.agree_date|date:"M d, Y" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Phone:</strong> {{ preparer.phone|default:"N/A" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Registered On:</strong> {{ preparer.registered_on|date:"M d, Y h:i A" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Last Updated:</strong> {{ preparer.updated_on|date:"M d, Y h:i A" }}
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'edit_preparer' %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

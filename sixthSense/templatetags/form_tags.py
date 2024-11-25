@@ -16,7 +16,6 @@ class CompanyForm(forms.ModelForm):
         fields = [
             'company_name', 
             'logo', 
-            'email_id', 
             'status', 
             'office_contact', 
             'phone_number', 

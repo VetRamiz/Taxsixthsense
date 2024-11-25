@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dashboard{% endblock %}</title>
+    <title>{% block title %}Preparer Dashboard{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
     <style>
         body {
             margin: 0;
@@ -18,7 +16,7 @@
 
         input, select, textarea {
             color: #0d47a1; /* Dark blue text */
-            background: #bbdefb; /* Light blue for input fields */
+            background: #bbdefb; /* Lighter blue for input fields */
             border: 1px solid #90caf9; /* Border color */
         }
 
@@ -31,7 +29,7 @@
         }
 
         .nav-link:hover, .dropdown-item:hover {
-            background-color: #64b5f6; /* Lighter blue hover effect */
+            background-color: #64b5f6; /* Lighter blue hover */
             color: white; /* White text on hover */
         }
 
@@ -44,8 +42,7 @@
             margin-left: 200px;
             padding: 20px;
             width: calc(100% - 200px);
-            background: #e3f2fd; /* Match the body background */
-            color: #0d47a1;
+            background: #e3f2fd; /* Match main background */
         }
 
         .header {
@@ -145,7 +142,7 @@
 <div class="header">
     {% load static %}
     <img src="{% static 'assets/img/logo1.png' %}" alt="Logo">
-    <h1>TaxSixthSense</h1>
+    <h1>Preparer Dashboard</h1>
     <button class="toggle-sidebar" id="sidebarToggle">
         <i class="fas fa-bars"></i>
     </button>
@@ -157,45 +154,21 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-heading text-center py-3">Dashboard</div>
         <div class="list-group list-group-flush">
-            <a href="{% url 'company_dashboard' %}" class="nav-link">Dashboard</a>
-            <a href="{% url 'company_report' %}" class="nav-link">Company Report</a>
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownCompanies" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Companies</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownCompanies">
-                    <a class="dropdown-item" href="{% url 'company_report' %}">List Companies</a>
-                    <a class="dropdown-item" href="{% url 'register_company' %}">Register Company</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownPreparers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Preparers</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownPreparers">
-                    <a class="dropdown-item" href="{% url 'preparer_report' %}">List Preparers</a>
-                    <a class="dropdown-item" href="{% url 'register_preparer' %}">Register Preparer</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownClients" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clients</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownClients">
-                    <a class="dropdown-item" href="{% url 'client_list' %}">Clients List</a>
-                    <a class="dropdown-item" href="{% url 'register_client' %}">Register Client</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownFileAudit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Client File Audit</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownFileAudit">
-                    <a class="dropdown-item" href="{% url 'create_audit' %}">Form</a>
-                    <a class="dropdown-item" href="{% url 'audit_list' %}">List</a>
-                </div>
-            </div>
-            <a href="{% url 'export_data_to_excel' %}" class="nav-link">Export Data</a>
-            <a href="{% url 'import_data_to_excel' %}" class="nav-link">Import Data</a>
-            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            <a href="{% url 'partnership_payroll_report' %}" class="nav-link"><i class="fas fa-money-check-alt"></i> Partnership Payroll Report</a>
+            <a href="{% url 'taxpayer_audit_report' %}" class="nav-link"><i class="fas fa-file-alt"></i> TaxPayer Audit Report</a>
+            <a href="{% url 'taxpayer_loan_report' %}" class="nav-link"><i class="fas fa-balance-scale"></i> TaxPayer Loan Status Report</a>
+            <div class="divider"></div> <!-- Disrupting Line -->
+            <a href="{% url 'preparer_profile' %}" class="nav-link"><i class="fas fa-user"></i> Profile</a>
+            <a href="{% url 'password_change' %}" class="nav-link"><i class="fas fa-key"></i> Change Password</a>
+            <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="content">
         {% block content %}
+        <!-- Main content goes here -->
         {% endblock %}
     </div>
 

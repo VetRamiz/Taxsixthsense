@@ -1,0 +1,55 @@
+{% extends "sixthSense/base_preparer.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Taxpayer Loan Report</h2>
+
+    <!-- Year Filter -->
+    <form method="get" class="mb-4">
+        <label for="year">Filter by Year:</label>
+        <select name="year" id="year" class="form-control" onchange="this.form.submit()">
+            <option value="">All Years</option>
+            {% for year in years %}
+                <option value="{{ year }}" {% if year|stringformat:"s" == selected_year %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Loan Report Table -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Application Date</th>
+                <th>Decision Date</th>
+                <th>Loan Type</th>
+                <th>Status</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>SSN</th>
+                <th>Disb Type</th>
+                <th>Advance Amount</th>
+                <th>Outstanding Loan Balance</th>
+                <th>Marketing Fee</th>
+                <th>Repayment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in loans %}
+            <tr>
+                <td>{{ loan.application_date }}</td>
+                <td>{{ loan.decision_date }}</td>
+                <td>{{ loan.loan_type }}</td>
+                <td>{{ loan.status }}</td>
+                <td>{{ loan.last_name }}</td>
+                <td>{{ loan.first_name }}</td>
+                <td>{{ loan.ssn }}</td>
+                <td>{{ loan.disb_type }}</td>
+                <td>${{ loan.advance_amount }}</td>
+                <td>${{ loan.outstanding_loan_balance }}</td>
+                <td>${{ loan.marketing_fee }}</td>
+                <td>{{ loan.repayment_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

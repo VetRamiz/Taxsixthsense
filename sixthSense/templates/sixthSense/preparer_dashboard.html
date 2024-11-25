@@ -1,0 +1,94 @@
+{% extends 'sixthSense/base_preparer.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparer Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-light text-dark">
+
+<div class="container mt-5">
+    <h1 class="text-center">Preparer Dashboard</h1>
+
+    <!-- Filter Section -->
+    <form method="get" action="{% url 'preparer_dashboard' %}">
+        <label for="year">Filter by Year:</label>
+        <select name="year" id="year">
+            <option value="">All Years</option>
+            {% for year in distinct_years %}
+                <option value="{{ year }}" {% if year|stringformat:"s" == selected_year %}selected{% endif %}>
+                    {{ year }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    
+
+    <!-- Summary Cards -->
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5>Total Clients</h5>
+                    <h3>{{ total_clients }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>Total Prep Fee Charged</h5>
+                    <h3>${{ total_prep_fee_charged }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5>Total Payout</h5>
+                    <h3>${{ total_payout }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Information -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <h5>Total Missing Documents</h5>
+                    <h3>{{ total_missing_docs }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5>Percentage of Missing Documents</h5>
+                    <h3>{{ missing_docs_percentage|floatformat:2 }}%</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company List -->
+    <div class="mt-5">
+        <h4>Associated Companies</h4>
+        <ul>
+            {% for company in companies %}
+            <li>{{ company }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}
