@@ -452,7 +452,7 @@ def partnership_payroll_report(request):
     context = {
         "payroll_data": payroll_data,
         "selected_year": selected_year,
-        "years": list(range(2020, 2025)),  # Example range for the year dropdown
+        "years": list(range(2018, 2035)),  # Example range for the year dropdown
     }
 
     return render(request, "sixthSense/partnership_payroll_report.html", context)
@@ -538,7 +538,7 @@ def preparer_profile(request):
 
 import pandas as pd
 from django.http import HttpResponse
-from .models import Company, PayoutBreakdown, ClientAuditList, TaxpayerLoanStatus
+from .models import PayoutBreakdown, ClientAuditList, TaxpayerLoanStatus
 
 def export_data_to_excel(request):
     # Ensure the user is associated with a company
@@ -547,17 +547,27 @@ def export_data_to_excel(request):
 
     company = request.user.company_profile
 
-    # Collect data for all models related to the company
-    data = {
-        "PayoutBreakdown": list(PayoutBreakdown.objects.filter(company_name=company).values()),
-        "ClientAuditList": list(ClientAuditList.objects.filter(company_name=company).values()),
-        "TaxpayerLoanStatus": list(TaxpayerLoanStatus.objects.filter(company_name=company).values()),
+    # Define models to export with their respective names
+    models_data = {
+        "PayoutBreakdown": PayoutBreakdown,
+        "ClientAuditList": ClientAuditList,
+        "TaxpayerLoanStatus": TaxpayerLoanStatus,
     }
 
     # Create an Excel file with each model as a separate sheet
     with pd.ExcelWriter('exported_data.xlsx', engine='openpyxl') as writer:
-        for sheet_name, rows in data.items():
-            df = pd.DataFrame(rows)
+        for sheet_name, model in models_data.items():
+            # Get data for the company
+            queryset = model.objects.filter(company_name=company).values()
+            
+            # Create DataFrame with column headers even if no data
+            if queryset.exists():
+                df = pd.DataFrame(list(queryset))
+            else:
+                # If no rows, create an empty DataFrame with column headers
+                fields = [field.name for field in model._meta.fields]
+                df = pd.DataFrame(columns=fields)
+            
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     # Send the file as a response
@@ -565,6 +575,7 @@ def export_data_to_excel(request):
         response = HttpResponse(excel_file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename={company.company_name}_exported_data.xlsx'
     return response
+
 
 
 import pandas as pd

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TaxSixthSense{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: white; /* White background */
+            color: black; /* Black text color */
+        }
+
+        input, select, textarea {
+            color: black; /* Black text */
+            background: #f8f9fa; /* Light grey for input fields */
+            border: 1px solid #dee2e6; /* Border color */
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #6c757d; /* Placeholder text color */
+        }
+
+        .nav-link, .dropdown-item {
+            color: black; /* Black text for links */
+        }
+
+        .nav-link:hover, .dropdown-item:hover {
+            background-color: #f0f0f0; /* Slight grey hover */
+            color: black; /* Black text on hover */
+        }
+
+        .header {
+            width: 100%;
+            height: 60px;
+            background-color: white; /* White background */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the title */
+            color: black; /* Black text */
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #dee2e6; /* Light grey border */
+        }
+
+        .header img {
+            height: 50px;
+            margin-right: 10px; /* Space between logo and title */
+        }
+
+        .content {
+            margin-top: 60px; /* Adjust for the fixed header */
+            padding: 20px;
+            background: white; /* Match main background */
+        }
+
+        .dropdown-menu {
+            background-color: white; /* Dropdown background */
+            border: 1px solid #dee2e6; /* Light grey border */
+        }
+
+        .dropdown-item {
+            color: black; /* Black text for dropdown items */
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0; /* Hover effect */
+            color: black;
+        }
+
+        .divider {
+            border-top: 1px solid #dee2e6; /* Light grey divider */
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    {% load static %}
+    <img src="{% static 'assets/img/logo1.png' %}" alt="Logo">
+    <h1>TaxSixthSense</h1>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    {% block content %}
+    <!-- Main content goes here -->
+    {% endblock %}
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

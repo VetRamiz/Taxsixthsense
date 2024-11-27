@@ -168,10 +168,6 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError('Passwords do not match')
         return cleaned_data
 
-from django import forms
-from django.contrib.auth.models import User
-from .models import Company, Preparer
-
 
 from django import forms
 from django.contrib.auth.models import User, Group
@@ -237,7 +233,7 @@ class PreparerRegistrationForm(forms.ModelForm):
     class Meta:
         model = Preparer
         fields = [
-            'first_name', 'last_name', 'office_name', 'office_contact', 'self_employed',
+           'ptin', 'first_name', 'last_name', 'office_name', 'office_contact', 'self_employed',
             'view_own_returns', 'guide_required', 'prepares_ny', 'prepares_or_returns',
             'title', 'company_name', 'office_code', 'agree_date', 'phone', 'account_active',
         ]
@@ -271,6 +267,7 @@ class PreparerProfileForm(forms.ModelForm):
     class Meta:
         model = Preparer
         fields = [
+            "ptin",
             "first_name",
             "last_name",
             "preparer_email",

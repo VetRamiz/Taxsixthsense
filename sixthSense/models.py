@@ -41,6 +41,7 @@ class Preparer(models.Model):
         ('inactive', 'Inactive'),
     ]
 
+    ptin= models.CharField(max_length=50, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     preparer_email= models.EmailField()
