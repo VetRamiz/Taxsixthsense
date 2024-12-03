@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-atxn&z6@!%!3!n)ir8w69^73$e@l42+37myrhr76%+*qd36j*(
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['taxsixthave.tech', 'www.taxsixthave.tech']
 
 
 # Application definition
