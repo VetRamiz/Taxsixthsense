@@ -80,7 +80,7 @@
     </tr>
 </table>
 
-<a href="{% url 'edit_preparer' preparer.pk %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'edit_preparer_inline' preparer.pk %}" class="btn btn-warning">Edit</a>
 <form action="{% url 'delete_preparer' preparer.pk %}" method="POST" style="display:inline;">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Delete</button>

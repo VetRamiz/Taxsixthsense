@@ -152,8 +152,8 @@
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-heading text-center py-3">Dashboard</div>
         <div class="list-group list-group-flush">
+            <a href="{% url 'preparer_dashboard' %}" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="{% url 'partnership_payroll_report' %}" class="nav-link"><i class="fas fa-money-check-alt"></i> Partnership Payroll Report</a>
             <a href="{% url 'taxpayer_audit_report' %}" class="nav-link"><i class="fas fa-file-alt"></i> TaxPayer Audit Report</a>
             <a href="{% url 'taxpayer_loan_report' %}" class="nav-link"><i class="fas fa-balance-scale"></i> TaxPayer Loan Status Report</a>

@@ -1,30 +1,71 @@
 {% extends 'sixthSense/base.html' %}
 
-{% block title %}Preparer Details{% endblock %}
+{% block title %}Company Details{% endblock %}
 
 {% block content %}
-<h1>Preparer Details</h1>
-
-<ul>
-    <li><strong>First Name:</strong> {{ preparer.first_name }}</li>
-    <li><strong>Last Name:</strong> {{ preparer.last_name }}</li>
-    <li><strong>Office Name:</strong> {{ preparer.office_name }}</li>
-    <li><strong>Office Contact:</strong> {{ preparer.office_contact }}</li>
-    <li><strong>Self Employed:</strong> {{ preparer.self_employed }}</li>
-    <li><strong>View Own Returns:</strong> {{ preparer.view_own_returns }}</li>
-    <li><strong>Guide Required:</strong> {{ preparer.guide_required }}</li>
-    <li><strong>Prepares NY Returns:</strong> {{ preparer.prepares_ny }}</li>
-    <li><strong>Prepares OR Returns:</strong> {{ preparer.prepares_or_returns }}</li>
-    <li><strong>Title:</strong> {{ preparer.title }}</li>
-    <li><strong>Company Name:</strong> {{ preparer.company_name }}</li>
-    <li><strong>Office Code:</strong> {{ preparer.office_code }}</li>
-    <li><strong>Agreement Date:</strong> {{ preparer.agree_date }}</li>
-    <li><strong>Email:</strong> {{ preparer.email }}</li>
-    <li><strong>Phone:</strong> {{ preparer.phone }}</li>
-    <li><strong>Account Active:</strong> {{ preparer.account_active }}</li>
-    <li><strong>Registered On:</strong> {{ preparer.registered_on }}</li>
-    <li><strong>Updated On:</strong> {{ preparer.updated_on }}</li>
-</ul>
-
-<a href="{% url 'preparer_report' %}" class="btn btn-secondary">Back to List</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>{{ company.company_name }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Email:</div>
+                        <div class="col-md-8">{{ company.email }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Status:</div>
+                        <div class="col-md-8">{{ company.get_status_display }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Office Contact:</div>
+                        <div class="col-md-8">{{ company.office_contact }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Phone Number:</div>
+                        <div class="col-md-8">{{ company.phone_number }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">City:</div>
+                        <div class="col-md-8">{{ company.city }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">State:</div>
+                        <div class="col-md-8">{{ company.state }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">ZIP Code:</div>
+                        <div class="col-md-8">{{ company.zip_code }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Role:</div>
+                        <div class="col-md-8">{{ company.role }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Address:</div>
+                        <div class="col-md-8">{{ company.address }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Registered On:</div>
+                        <div class="col-md-8">{{ company.registered_on|date:"F j, Y" }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Last Updated:</div>
+                        <div class="col-md-8">{{ company.updated_on|date:"F j, Y" }}</div>
+                    </div>
+                    {% if company.logo %}
+                    <div class="row mb-3 text-center">
+                        <img src="{{ company.logo.url }}" alt="Logo" class="img-fluid" style="max-height: 200px;">
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'company_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
